@@ -44,3 +44,11 @@ class UserEachGetPutDeleteAPI(APIView):
         queryset = self.get_object(pk)
         queryset.delete()
         return Response({"message": "Data is deleted"}, status=status.HTTP_204_NO_CONTENT)
+
+
+"""Faculty Choice ko Option Frontend lai pathauna"""
+class FacultyChoicesAPI(APIView):
+    def get(self, request):
+        # Extracting choices from the model
+        choices = dict(UserModel.faculty_choices)  # Convert tuple to dictionary
+        return Response(choices)  # Send choices as JSON
