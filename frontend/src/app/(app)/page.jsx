@@ -1,9 +1,11 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function HomePage() {
+  const router = useRouter();
   let [userInfo, setUserInfo] = useState([]);
 
   const getUserData = async () => {
@@ -28,12 +30,17 @@ export default function HomePage() {
     getUserData();
   }, []);
 
+  const openLink = (route) => {
+    router.replace(route);
+  };
+
   return (
     <div className="main-container grid grid-cols-3 gap-4 p-5">
       {userInfo.map((data) => (
         <div
           className="container cursor-pointer bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition duration-300"
           key={data.full_name}
+          onClick={() => openLink(`/${data.id}`)}
         >
           <img
             alt="image"
