@@ -17,7 +17,7 @@ class UserModel(models.Model):
     email = models.EmailField(max_length=400)  
     phone_number = models.CharField(max_length=15, blank=True, null=True) 
     faculty = models.CharField(choices=faculty_choices, max_length=200)  
-    user_image = models.ImageField(upload_to="user_image/")  
+    user_image = models.ImageField(upload_to="user_image/",blank=True, null=True)  
     address = models.CharField(max_length=200, blank=True, null=True) 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

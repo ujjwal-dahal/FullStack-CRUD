@@ -34,11 +34,18 @@ class UserEachGetPutDeleteAPI(APIView):
 
     def put(self, request, pk):
         queryset = self.get_object(pk)
-        serializer = UserSerializer(queryset, data=request.data)
+
+        # Check if an image is included in the request data
+        if 'user_image' not in request.data:
+            # If no new image is uploaded, keep the existing image
+            request.data['user_image'] = queryset.user_image.url  # Assuming the model has an image field
+
+        serializer = UserSerializer(queryset, data=request.data , partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, pk):
         queryset = self.get_object(pk)
